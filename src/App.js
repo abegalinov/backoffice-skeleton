@@ -1,113 +1,100 @@
 import React from 'react';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
-import { Link as RouterLink, Redirect, Route, Switch } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from "react-router-dom";
+
+import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
+import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
-import Container from '@material-ui/core/Container';
-import List from '@material-ui/core/List';
 import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import AccountCircle from '@material-ui/icons/AccountCircle';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
-import { mainListItems } from './listItems';
-import Copyright from './Copyright';
-import { useStyles } from './AppStyles';
-import { changeLoggedIn } from './actions';
+import Toolbar from '@material-ui/core/Toolbar';
+import Divider from '@material-ui/core/Divider';
+import { useTheme } from '@material-ui/core/styles';
 
-function App() {
+import useStyles from "./styles";
+import Navigation from './Navigation';
+import Dashboard from './resources/Dashboard';
+
+function App(props) {
+  const { container } = props;
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const handleDrawerOpen = () => {
-    setOpen(true);
+  const theme = useTheme();
+
+  const [mobileDrawerOpen, setMobileDrawerOpen] = React.useState(false);
+  const [desktopDrawerOpen, setDesktopDrawerOpen] = React.useState(true);
+
+  const handleMobileDrawerToggle = () => {
+    setMobileDrawerOpen(!mobileDrawerOpen);
   };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
-  const handleMenu = event => {
-    setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
-    setAnchorEl(null);
+  const handleDesktopDrawerToggle = () => {
+    setDesktopDrawerOpen(!desktopDrawerOpen);
   };
 
   return (
+    <Router>
     <div className={classes.root}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar)}>
-        <Toolbar className={classes.toolbar}>
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar>
           <IconButton
-            edge="start"
             color="inherit"
             aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            className={clsx(classes.menuButton)}
+            edge="start"
+            onClick={() => { handleMobileDrawerToggle(); handleDesktopDrawerToggle(); }}
+            className={classes.menuButton}
           >
-            <MenuIcon />
+           <MenuIcon />
           </IconButton>
-          <Typography component="h1" variant="h6" color="inherit" noWrap className={classes.title}>
-            Dashboard
-          </Typography>
-          <div>
-              <IconButton
-                aria-label="account of current user"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={anchorEl}
-                onClose={handleClose}
-              >
-                <MenuItem onClick={handleClose}>Logout</MenuItem>
-              </Menu>
-            </div>
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: clsx(classes.drawerPaper),
-        }}
-        open={open}
-      >
-        <List>{mainListItems}</List>
-      </Drawer>
-      <main className={classes.content}>
-        <div className={classes.appBarSpacer} />
-        <Container maxWidth="lg" className={classes.container}>
-{ /*
+      <nav className={classes.drawer} aria-label="mailbox folders">
+        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
+        <Hidden smUp implementation="js">
+          <Drawer
+            container={container}
+            variant="temporary"
+            anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+            open={mobileDrawerOpen}
+            onClose={handleMobileDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            <Divider />
+            <Navigation />
+          </Drawer>
+        </Hidden>
+        <Hidden xsDown implementation="js">
+          <Drawer
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            variant="persistent"
+            open={desktopDrawerOpen}
+          >
+            <Navigation />
+          </Drawer>
+        </Hidden>
+      </nav>
+      <main className={clsx(classes.content, {[classes.contentShift]: desktopDrawerOpen})}>
+        <div className={classes.toolbar} />
           <Switch>
-            <Route exact path="/friends/" component={Friends} />
-            <Route exact path="/books/" component={Books} />
-            <Redirect exact from="/" to="/friends/" />
+            <Route exact path="/dashboard" component={Dashboard} />
+            <Redirect exact from="/" to="/dashboard" />
           </Switch>
-*/ }
-        </Container>
-        <Copyright />
       </main>
     </div>
+    </Router>
   );
 }
 
@@ -116,6 +103,5 @@ export default connect(
     loggedIn: state.loggedIn,
   }),
   {
-    changeLoggedIn
   }
 )(App);

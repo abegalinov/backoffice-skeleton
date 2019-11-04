@@ -1,16 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { changeLoggedIn } from './state/actions';
 import Login from './Login';
 import App from './App';
 import LoginRequiredRoute from './LoginRequiredRoute';
-import { changeLoggedIn } from './actions';
 
-class ActuallyMainApp extends Component {
-  componentDidMount() {
-  }
-
+class ActuallyMainApp extends React.Component {
   render() {
     return (
       <Switch>
