@@ -10,7 +10,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
-import { changeLoggedIn } from './state/actions';
+import { loginProcess } from './state/actions';
 import  useStyles  from './styles';
 
 export function SignIn(props) {
@@ -27,10 +27,12 @@ export function SignIn(props) {
         </Typography>
         <form className={classes.form} noValidate>
           <TextField
+            onChange={props.setEmail}
             variant="outlined"
             margin="normal"
             required
             fullWidth
+            error={props.isError()}
             id="email"
             label="Email Address"
             name="email"
@@ -38,8 +40,10 @@ export function SignIn(props) {
             autoFocus
           />
           <TextField
+            onChange={props.setPassword}
             variant="outlined"
             margin="normal"
+            error={props.isError()}
             required
             fullWidth
             name="password"
@@ -49,7 +53,7 @@ export function SignIn(props) {
             autoComplete="current-password"
           />
           <Button
-            onClick={props.changeLoggedIn}
+            onClick={props.submitForm}
             fullWidth
             variant="contained"
             color="primary"
@@ -63,21 +67,43 @@ export function SignIn(props) {
   );
 }
 
-const Login = (props) => {
-  if (props.loggedIn) {
-    const { from } = props.location.state || { from: { pathname: '/' } }
-    return <Redirect to={from} />
+class Login extends React.Component {
+  isError = () => {
+    return this.props.error !== null;
   }
-  return (
-    <SignIn {...props} />
-  )
+  submitForm = () => {
+    this.props.loginProcess({ username: this.state.email, password: this.state.password });
+  };
+  setEmail = (e) => {
+    this.setState({
+      ...this.state,
+      email: e.target.value
+    })
+  };
+  setPassword = (e) => {
+    this.setState({
+      ...this.state,
+      password: e.target.value
+    })
+  };
+
+  render = () => {
+    if (this.props.loggedIn) {
+      const { from } = this.props.location.state || { from: { pathname: '/' } }
+      return <Redirect to={from} />
+    }
+    return (
+      <SignIn {...this} />
+    );
+  };
 }
 
 export default connect(
   state => ({
-    loggedIn: state.loggedIn
-  }),
-  {
-    changeLoggedIn,
+    loading: state.login.loading,
+    error: state.login.error,
+    loggedIn: state.login.loggedIn
+  }), {
+    loginProcess
   }
 )(Login);

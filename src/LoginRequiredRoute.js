@@ -17,6 +17,6 @@ const LoginRequiredRoute = ({ component: Component, ...rest }) => (
 
 export default connect(
   state => ({
-    loggedIn: state.loggedIn,
+    loggedIn: state.login.loggedIn,
   })
 )(LoginRequiredRoute);

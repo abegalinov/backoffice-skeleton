@@ -1,15 +1,35 @@
 import { combineReducers } from 'redux';
-import { CHANGE_LOGGED_IN } from './actions';
+import { LOGIN_STARTED, LOGIN_SUCCESS, LOGIN_FAILED } from './actions';
 
-const loggedInReducer = ( state = null, action) => {
+const loginReducer = (
+  state = {loading: false, error: null, loggedIn: null}, 
+  action
+  ) => {
   switch (action.type) {
-    case CHANGE_LOGGED_IN: return action.newValue;
+    case LOGIN_STARTED: 
+      return {
+        ...state,
+        loading: true
+      };
+    case LOGIN_SUCCESS: 
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        loggedIn: [ action.payload ]
+      };
+    case LOGIN_FAILED: 
+      return {
+        ...state,
+        loading: false,
+        error: 'Login failed'
+      };
     default: return state;
   };
 };
 
 const reducers = combineReducers({
-  loggedIn: loggedInReducer,
+  login: loginReducer,
 });
 
 export default reducers;
