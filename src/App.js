@@ -55,7 +55,6 @@ function App(props) {
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
-        {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
         <Hidden smUp implementation="js">
           <Drawer
             container={container}
@@ -67,7 +66,7 @@ function App(props) {
               paper: classes.drawerPaper,
             }}
             ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
+              keepMounted: true
             }}
           >
             <Divider />
@@ -101,7 +100,5 @@ function App(props) {
 export default connect(
   state => ({
     loggedIn: state.loggedIn,
-  }),
-  {
-  }
+  })
 )(App);

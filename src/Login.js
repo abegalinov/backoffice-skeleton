@@ -9,6 +9,7 @@ import TextField from '@material-ui/core/TextField';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import { loginProcess } from './state/actions';
 import  useStyles  from './styles';
@@ -19,12 +20,10 @@ export function SignIn(props) {
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Login
-        </Typography>
+        {props.props.loading 
+          ? <CircularProgress size={68} className={classes.loginProgress} /> 
+          : <Avatar className={classes.avatar}><LockOutlinedIcon /></Avatar>
+        }                 
         <form className={classes.form} noValidate>
           <TextField
             onChange={props.setEmail}
@@ -68,6 +67,13 @@ export function SignIn(props) {
 }
 
 class Login extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: null,
+      password: null
+    };
+  }
   isError = () => {
     return this.props.error !== null;
   }
