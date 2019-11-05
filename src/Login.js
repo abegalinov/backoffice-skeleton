@@ -79,6 +79,7 @@ class Login extends React.Component {
   }
   submitForm = () => {
     this.props.loginProcess({ username: this.state.email, password: this.state.password });
+    this.setState({});
   };
   setEmail = (e) => {
     this.setState({

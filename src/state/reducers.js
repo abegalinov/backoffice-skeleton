@@ -1,10 +1,9 @@
 import { combineReducers } from 'redux';
 import { LOGIN_STARTED, LOGIN_SUCCESS, LOGIN_FAILED } from './actions';
 
-const loginReducer = (
-  state = {loading: false, error: null, loggedIn: null}, 
-  action
-  ) => {
+const initialState = {loading: false, error: null, loggedIn: null};
+
+const loginReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_STARTED: 
       return {
