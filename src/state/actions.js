@@ -1,4 +1,4 @@
-import authService from "../services/authService";
+import { loadService, AUTH_SERVICE } from "../services/servicesContainer";
 
 export const LOGIN_STARTED = 'LOGIN_STARTED';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
@@ -7,18 +7,17 @@ export const LOGIN_RESTORE = 'LOGIN_RESTORE';
 
 export const LOCAL_STORAGE_LOGIN_KEY = 'loggedIn';
 
+const authService = loadService(AUTH_SERVICE);
+
 export const loginProcess = ({ username, password }) => {
   return dispatch => {
     dispatch(loginStarted());
     
-    authService.login(
-      username, 
-      password, 
-      authData => {
+    authService.login(username, password)
+    .then(authData => {
         localStorage.setItem(LOCAL_STORAGE_LOGIN_KEY, JSON.stringify(authData));
         dispatch(loginSuccess(authData));
-      },
-      error => {
+      }).catch(error => {
         console.log(error);
         dispatch(loginFailed());
       }
