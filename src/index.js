@@ -6,13 +6,13 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 
 import reducers from './state/reducers';
-import SecuredApp from './SecuredApp';
+import SecuredApp from './core.components/SecuredApp';
 import { loginRestore } from "./state/actions";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(reducers, /* preloadedState, */ composeEnhancers( 
-  applyMiddleware(thunk)
-));
+const store = process.env.NODE_ENV === 'development' 
+  ? createStore(reducers, /* preloadedState, */ composeEnhancers(applyMiddleware(thunk)))
+  : createStore(reducers, applyMiddleware(thunk));
 
 store.dispatch(loginRestore());
 

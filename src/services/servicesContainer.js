@@ -1,4 +1,5 @@
 export const AUTH_SERVICE = 'authService';
+export const LOCAL_STORAGE_SERVICE = 'localStorageService';
 
 export function loadService(serviceName) {
     switch (serviceName) {
@@ -6,9 +7,9 @@ export function loadService(serviceName) {
             return process.env.NODE_ENV !== 'development'
                 ? require("../services/authService")
                 : require("../services/mockAuthService");    
-            break;
+        case LOCAL_STORAGE_SERVICE:
+            return require("../services/localStorageService");
         default:
-            throw 'Cannot load service';
-            break;
+            throw new Error('Cannot load service with name: ' + serviceName);
     }
 }  

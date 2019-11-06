@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { LOGIN_STARTED, LOGIN_SUCCESS, LOGIN_FAILED } from './actions';
+import { LOGIN_STARTED, LOGIN_SUCCESS, LOGIN_FAILED } from './actionTypes';
 
 const initialState = {loading: false, error: null, loggedIn: null};
 

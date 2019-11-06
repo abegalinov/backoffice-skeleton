@@ -1,12 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect
-} from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,9 +13,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Divider from '@material-ui/core/Divider';
 import { useTheme } from '@material-ui/core/styles';
 
-import useStyles from "./styles";
+import { AppRoutes } from '../routes';
+import useStyles from "../styles";
 import Navigation from './Navigation';
-import Dashboard from './resources/Dashboard';
 
 function App(props) {
   const { container } = props;
@@ -87,10 +82,7 @@ function App(props) {
       </nav>
       <main className={clsx(classes.content, {[classes.contentShift]: desktopDrawerOpen})}>
         <div className={classes.toolbar} />
-          <Switch>
-            <Route exact path="/dashboard" component={Dashboard} />
-            <Redirect exact from="/" to="/dashboard" />
-          </Switch>
+        <AppRoutes />
       </main>
     </div>
     </Router>
