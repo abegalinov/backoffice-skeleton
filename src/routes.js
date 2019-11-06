@@ -4,7 +4,7 @@ import {
     Route,
     Redirect
 } from "react-router-dom";
-import Dashboard from './resources/Dashboard';
+import Dashboard from './app.components/Dashboard';
 
 export const AppRoutes = () => {
     return(
