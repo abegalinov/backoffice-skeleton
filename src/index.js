@@ -7,11 +7,14 @@ import thunk from 'redux-thunk';
 
 import reducers from './state/reducers';
 import SecuredApp from './SecuredApp';
+import { loginRestore } from "./state/actions";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(reducers, /* preloadedState, */ composeEnhancers( 
   applyMiddleware(thunk)
 ));
+
+store.dispatch(loginRestore());
 
 ReactDOM.render(
   <Provider store={store}>
