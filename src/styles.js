@@ -67,7 +67,10 @@ const styles = makeStyles(theme => ({
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
-  }
+  },
+  title: {
+    flexGrow: 1,
+  },
 }));
 
 export default styles;

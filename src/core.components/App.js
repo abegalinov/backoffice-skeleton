@@ -11,11 +11,13 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Toolbar from '@material-ui/core/Toolbar';
 import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
 
 import { AppRoutes } from '../routes';
 import useStyles from "../styles";
 import Navigation from './Navigation';
+import UserMenu from './UserMenu';
 
 function App(props) {
   const { container } = props;
@@ -40,13 +42,17 @@ function App(props) {
         <Toolbar>
           <IconButton
             color="inherit"
-            aria-label="open drawer"
+            aria-label="navigation"
             edge="start"
             onClick={() => { handleMobileDrawerToggle(); handleDesktopDrawerToggle(); }}
             className={classes.menuButton}
           >
            <MenuIcon />
           </IconButton>
+          <Typography variant="h6" className={classes.title}>
+            Administration
+          </Typography>
+          <UserMenu />
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">
@@ -91,6 +97,6 @@ function App(props) {
 
 export default connect(
   state => ({
-    loggedIn: state.loggedIn,
+    loggedIn: state.login.loggedIn,
   })
 )(App);

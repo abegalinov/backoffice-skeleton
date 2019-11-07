@@ -1,5 +1,5 @@
 import { loadService, AUTH_SERVICE, LOCAL_STORAGE_SERVICE } from "../services/servicesContainer";
-import { LOGIN_FAILED, LOGIN_SUCCESS, LOGIN_STARTED } from "./actionTypes";
+import { LOGIN_FAILED, LOGIN_SUCCESS, LOGIN_STARTED, LOGOUT } from "./actionTypes";
 
 let authService = loadService(AUTH_SERVICE);
 let localStorageService = loadService(LOCAL_STORAGE_SERVICE);
@@ -30,7 +30,14 @@ export const loginRestore = () => {
     }
     localStorageService.removeLoginData();
   }
-}
+};
+
+export const logoutProcess = () => {
+  return dispatch => {
+    dispatch(logout());
+    localStorageService.removeLoginData();
+  }
+};
 
 const loginStarted = () => ({
   type: LOGIN_STARTED
@@ -45,4 +52,8 @@ const loginSuccess = authData => ({
 
 const loginFailed = () => ({
   type: LOGIN_FAILED
+});
+
+const logout = () => ({
+  type: LOGOUT
 });
