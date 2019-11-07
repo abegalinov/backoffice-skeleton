@@ -2,14 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 function Dashboard(props) {
-    return (
-        <h1>Dashboard</h1>
+  return (
+        <h1>Hello {props.loggedIn.userName}</h1>
     );
 }
 
 export default connect(
     state => ({
-      loggedIn: state.loggedIn,
+      loggedIn: state.login.loggedIn,
     }),
     {
     }
