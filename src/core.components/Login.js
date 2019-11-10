@@ -13,24 +13,37 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { loginProcess } from '../state/actions';
 import  useStyles  from '../styles';
 
-export function SignIn(props) {
+export function Login(props) {
   const classes = useStyles();
+
+  if (props.loggedIn) {
+    const { from } = props.location.state || { from: { pathname: '/' } }
+    return <Redirect to={from} />
+  }
+  
+  const usernameInput = React.createRef();
+  const passwordInput = React.createRef();
+
+  const submitForm = () => {
+    props.loginProcess({ username: usernameInput.current.value, password: passwordInput.current.value });
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        {props.props.loading 
+        {props.loading 
           ? <CircularProgress size={68} className={classes.loginProgress} /> 
           : <Avatar className={classes.avatar}><LockOutlinedIcon /></Avatar>
         }                 
         <form className={classes.form} noValidate>
           <TextField
-            onChange={props.setEmail}
+            inputRef={usernameInput}
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            error={props.isError()}
+            error={props.error !== null}
             id="email"
             label="Email Address"
             name="email"
@@ -38,10 +51,10 @@ export function SignIn(props) {
             autoFocus
           />
           <TextField
-            onChange={props.setPassword}
+            inputRef={passwordInput}
             variant="outlined"
             margin="normal"
-            error={props.isError()}
+            error={props.error !== null}
             required
             fullWidth
             name="password"
@@ -51,7 +64,7 @@ export function SignIn(props) {
             autoComplete="current-password"
           />
           <Button
-            onClick={props.submitForm}
+            onClick={submitForm}
             fullWidth
             variant="contained"
             color="primary"
@@ -63,45 +76,6 @@ export function SignIn(props) {
       </div>
     </Container>
   );
-}
-
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: null,
-      password: null
-    };
-  }
-  isError = () => {
-    return this.props.error !== null;
-  }
-  submitForm = () => {
-    this.props.loginProcess({ username: this.state.email, password: this.state.password });
-    this.setState({});
-  };
-  setEmail = (e) => {
-    this.setState({
-      ...this.state,
-      email: e.target.value
-    })
-  };
-  setPassword = (e) => {
-    this.setState({
-      ...this.state,
-      password: e.target.value
-    })
-  };
-
-  render = () => {
-    if (this.props.loggedIn) {
-      const { from } = this.props.location.state || { from: { pathname: '/' } }
-      return <Redirect to={from} />
-    }
-    return (
-      <SignIn {...this} />
-    );
-  };
 }
 
 export default connect(

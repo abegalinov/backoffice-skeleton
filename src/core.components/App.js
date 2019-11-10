@@ -19,7 +19,7 @@ import useStyles from "../styles";
 import Navigation from './Navigation';
 import UserMenu from './UserMenu';
 
-function App(props) {
+export function App(props) {
   const { container } = props;
   const classes = useStyles();
   const theme = useTheme();

@@ -8,7 +8,7 @@ import Menu from '@material-ui/core/Menu';
 
 import { logoutProcess } from '../state/actions';
 
-function UserMenu(props) {
+export function UserMenu(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
   
@@ -40,13 +40,13 @@ function UserMenu(props) {
                 id="menu-appbar"
                 anchorEl={anchorEl}
                 anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                    vertical: 'top',
+                    horizontal: 'right',
                 }}
                 keepMounted
                 transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
+                    vertical: 'top',
+                    horizontal: 'right',
                 }}
                 open={open}
                 onClose={handleClose}
