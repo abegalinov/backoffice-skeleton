@@ -3,7 +3,7 @@ import { Switch, Route, MemoryRouter as Router } from "react-router-dom";
 
 import { mount } from 'enzyme';
 
-import { LoginRequiredRoute } from '../core.components/LoginRequiredRoute';
+import { LoginRequiredRoute } from '../components/LoginRequiredRoute';
 
 const LoginComponent = () =>(<h1>login</h1>);
 const SecuredComponent = () =>(<h2>secured</h2>);

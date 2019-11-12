@@ -6,7 +6,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 
-import { logoutProcess } from '../state/actions';
+import { logoutProcess } from '../state/loginActions';
 
 export function UserMenu(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);

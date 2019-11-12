@@ -1,26 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { BrowserRouter } from 'react-router-dom';
-import { createStore, applyMiddleware, compose } from 'redux'
-import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
+import BackofficeApp from './core/BackofficeApp';
 
-import reducers from './state/reducers';
-import SecuredApp from './core.components/SecuredApp';
-import { loginRestore } from "./state/actions";
+import ListIcon from '@material-ui/icons/List';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = process.env.NODE_ENV === 'development' 
-  ? createStore(reducers, /* preloadedState, */ composeEnhancers(applyMiddleware(thunk)))
-  : createStore(reducers, applyMiddleware(thunk));
+import Dashboard from './components/Dashboard';
+import Categories from './components/Categories';
 
-store.dispatch(loginRestore());
+const app = new BackofficeApp();
+app.addResource({ path: "/", component: Dashboard, icon: DashboardIcon, title: "Dashboard" });
+app.addResource({ path: "/categories", component: Categories, icon: ListIcon, title: "Categories" });
 
-ReactDOM.render(
-  <Provider store={store}>
-    <BrowserRouter>
-      <SecuredApp />
-    </BrowserRouter>
-  </Provider>,
-  document.getElementById('root')
-);
+app.mount('root');

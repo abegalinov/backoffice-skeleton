@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
+import { Switch } from "react-router-dom";
 import { connect } from 'react-redux';
-import { BrowserRouter as Router } from "react-router-dom";
 
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -14,9 +14,10 @@ import Divider from '@material-ui/core/Divider';
 import Typography from '@material-ui/core/Typography';
 import { useTheme } from '@material-ui/core/styles';
 
-import { AppRoutes } from '../routes';
-import useStyles from "../styles";
-import Navigation from './Navigation';
+import useStyles from "./styles";
+
+import AppRoutes from './AppRoutes';
+import AppNavigation from './AppNavigation';
 import UserMenu from './UserMenu';
 
 export function App(props) {
@@ -35,7 +36,6 @@ export function App(props) {
   };
 
   return (
-    <Router>
     <div className={classes.root}>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
@@ -71,7 +71,7 @@ export function App(props) {
             }}
           >
             <Divider />
-            <Navigation />
+            <AppNavigation />
           </Drawer>
         </Hidden>
         <Hidden xsDown implementation="js">
@@ -82,16 +82,17 @@ export function App(props) {
             variant="persistent"
             open={desktopDrawerOpen}
           >
-            <Navigation />
+            <AppNavigation />
           </Drawer>
         </Hidden>
       </nav>
       <main className={clsx(classes.content, {[classes.contentShift]: desktopDrawerOpen})}>
         <div className={classes.toolbar} />
-        <AppRoutes />
+        <Switch>
+          <AppRoutes />
+        </Switch>
       </main>
     </div>
-    </Router>
   );
 }
 

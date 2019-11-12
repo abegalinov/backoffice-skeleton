@@ -10,8 +10,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Container from '@material-ui/core/Container';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-import { loginProcess } from '../state/actions';
-import  useStyles  from '../styles';
+import { loginProcess } from '../state/loginActions';
+import  useStyles  from './styles';
 
 export function Login(props) {
   const classes = useStyles();

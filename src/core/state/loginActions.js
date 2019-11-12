@@ -1,5 +1,5 @@
 import { loadService, AUTH_SERVICE, LOCAL_STORAGE_SERVICE } from "../services/servicesContainer";
-import { LOGIN_FAILED, LOGIN_SUCCESS, LOGIN_STARTED, LOGOUT } from "./actionTypes";
+import { LOGIN_FAILED, LOGIN_SUCCESS, LOGIN_STARTED, LOGOUT } from "./loginActionTypes";
 
 let authService = loadService(AUTH_SERVICE);
 let localStorageService = loadService(LOCAL_STORAGE_SERVICE);
@@ -11,7 +11,6 @@ export const loginProcess = ({ username, password }) => {
         localStorageService.storeLoginData(authData);
         dispatch(loginSuccess(authData));
       }).catch(error => {
-        console.log(error);
         dispatch(loginFailed());
       }
     );

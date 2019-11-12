@@ -5,15 +5,11 @@ import Login from './Login';
 import App from './App';
 import LoginRequiredRoute from './LoginRequiredRoute';
 
-class SecuredApp extends React.Component {
-  render() {
-    return (
-      <Switch>
-        <Route path="/login/" component={Login} />
-        <LoginRequiredRoute component={App} />
-      </Switch>
-    )
-  }
-}
+const SecuredApp = () => (
+  <Switch>
+    <Route path="/login/" component={Login} />
+    <LoginRequiredRoute component={App} />
+  </Switch>
+);
 
 export default withRouter(SecuredApp);

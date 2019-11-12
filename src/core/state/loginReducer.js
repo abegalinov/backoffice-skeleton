@@ -1,9 +1,8 @@
-import { combineReducers } from 'redux';
-import { LOGIN_STARTED, LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT } from './actionTypes';
+import { LOGIN_STARTED, LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT } from './loginActionTypes';
 
-const initialState = {loading: false, error: null, loggedIn: null};
+const loginReducerInitialState = {loading: false, error: null, loggedIn: null};
 
-const loginReducer = (state = initialState, action) => {
+const loginReducer = (state = loginReducerInitialState, action) => {
   switch (action.type) {
     case LOGIN_STARTED: 
       return {
@@ -34,8 +33,4 @@ const loginReducer = (state = initialState, action) => {
   };
 };
 
-const reducers = combineReducers({
-  login: loginReducer,
-});
-
-export default reducers;
+export default loginReducer;
