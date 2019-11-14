@@ -11,33 +11,34 @@ import SecuredApp from './components/SecuredApp';
 import AppContext from './AppContext';
 
 export default class BackofficeApp {
-  constructor() {
-    this.reducers = { login: loginReducer };
-    this.resources = [];
-  }
+
+  #reducers = { login: loginReducer };
+  #resources = [];
+  #store;
+
   injectReducers(reducers) {
-    this.reducers = { ...this.reducers, ...reducers };
+    this.#reducers = { ...this.#reducers, ...reducers };
   }
   addResource(resource) {
-    this.resources.push(resource);
+    this.#resources.push(resource);
   }
   getResources() {
-    return this.resources;
+    return this.#resources;
   }
   initStore() {
-    const reducers = combineReducers(this.reducers);
+    const reducers = combineReducers(this.#reducers);
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;    
-    this.store = process.env.NODE_ENV === 'development' 
+    this.#store = process.env.NODE_ENV === 'development' 
       ? createStore(reducers, /* preloadedState, */ composeEnhancers(applyMiddleware(thunk)))
       : createStore(reducers, applyMiddleware(thunk));    
   }
 
   mount(domElementId = 'root') {
     this.initStore();
-    this.store.dispatch(loginRestore());
+    this.#store.dispatch(loginRestore());
     
     ReactDOM.render(
-      <Provider store={this.store}>
+      <Provider store={this.#store}>
         <AppContext.Provider value={this}>
           <BrowserRouter>
             <SecuredApp />
