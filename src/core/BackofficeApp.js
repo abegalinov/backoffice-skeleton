@@ -11,9 +11,10 @@ import SecuredApp from './components/SecuredApp';
 import AppContext from './AppContext';
 
 export default class BackofficeApp {
-
+  defaultTitle = 'Backoffice application';
   #reducers = { login: loginReducer };
   #resources = [];
+  #pathTitlesName = {};
   #store;
 
   injectReducers(reducers) {
@@ -25,18 +26,25 @@ export default class BackofficeApp {
   getResources() {
     return this.#resources;
   }
+  getTitleForPath(path) {
+    return this.#pathTitlesName[path] || this.defaultTitle;
+  }
+  buildTitlesMap() {
+    this.#resources.map( resource => {
+      this.#pathTitlesName [resource.path] = resource.title;
+    });
+  }
   initStore() {
     const reducers = combineReducers(this.#reducers);
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;    
     this.#store = process.env.NODE_ENV === 'development' 
       ? createStore(reducers, /* preloadedState, */ composeEnhancers(applyMiddleware(thunk)))
       : createStore(reducers, applyMiddleware(thunk));    
+    this.#store.dispatch(loginRestore());
   }
-
   mount(domElementId = 'root') {
     this.initStore();
-    this.#store.dispatch(loginRestore());
-    
+    this.buildTitlesMap();    
     ReactDOM.render(
       <Provider store={this.#store}>
         <AppContext.Provider value={this}>
