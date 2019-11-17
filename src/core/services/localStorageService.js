@@ -1,14 +1,15 @@
-const LOCAL_STORAGE_LOGIN_DATA_KEY = 'loggedIn';
+export default class LocalStorageService {
 
-export const storeLoginData = (loginData) => {
-    localStorage.setItem(LOCAL_STORAGE_LOGIN_DATA_KEY, JSON.stringify(loginData));
-}
+    storeData(key, loginData) {
+        localStorage.setItem(key, JSON.stringify(loginData));
+    }
 
-export const getLoginData = () => {
-    let data = localStorage.getItem(LOCAL_STORAGE_LOGIN_DATA_KEY);
-    return data ? JSON.parse(data) : null;
-}
+    getData(key) {
+        let data = localStorage.getItem(key);
+        return data ? JSON.parse(data) : null;
+    }
 
-export const removeLoginData = () => {
-    localStorage.removeItem(LOCAL_STORAGE_LOGIN_DATA_KEY);
+    removeData(key) {
+        localStorage.removeItem(key);
+    }
 }
