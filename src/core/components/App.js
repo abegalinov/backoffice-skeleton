@@ -19,6 +19,7 @@ import useStyles from "./styles";
 import AppRoutes from './AppRoutes';
 import AppNavigation from './AppNavigation';
 import UserMenu from './UserMenu';
+import AppTitle from './AppTitle';
 
 export function App(props) {
   const { container } = props;
@@ -50,7 +51,7 @@ export function App(props) {
            <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Administration
+            <AppTitle path={props.location.pathname} />
           </Typography>
           <UserMenu />
         </Toolbar>

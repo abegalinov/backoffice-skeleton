@@ -14,7 +14,7 @@ function AppNavigation() {
             {context => (
               <List>
                 {context.getResources().map(resource => (
-                  <ListItemLink key={resource.path} to={resource.path} primary={resource.title} icon={<resource.icon />} />        
+                  <ListItemLink key={resource.path} to={resource.path} primary={resource.name} icon={<resource.icon />} />        
                 ))}
               </List>
             )}

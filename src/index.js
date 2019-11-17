@@ -14,7 +14,7 @@ if (process.env.NODE_ENV !== 'development') {
 }
 
 const app = new BackofficeApp();
-app.addResource({ path: "/", component: Dashboard, icon: DashboardIcon, title: "Dashboard" });
-app.addResource({ path: "/categories", component: Categories, icon: ListIcon, title: "Categories" });
+app.addResource({ path: "/", component: Dashboard, icon: DashboardIcon, name: "Dashboard", title: "Dashboard and statistics" });
+app.addResource({ path: "/categories", component: Categories, icon: ListIcon, name: "Categories", title: "Categories management" });
 
 app.mount('root');
