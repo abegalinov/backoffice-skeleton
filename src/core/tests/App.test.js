@@ -9,7 +9,7 @@ import { App } from '../components/App';
 
 describe('<App />', () => {
     it('initial state set', () => {
-        const wrapper = shallow(<App />);
+        const wrapper = shallow(<App location={{pathname: '/'}} />);
 
         expect(wrapper.find(Drawer).length).toBe(2);
         
@@ -22,7 +22,7 @@ describe('<App />', () => {
         expect(wrapper.find('main').props().className).toMatch(/contentShift/);
     });
     it('menu click changes drawers state', () => {
-        const wrapper = shallow(<App />);
+        const wrapper = shallow(<App location={{pathname: '/'}} />);
 
         wrapper.find(IconButton).simulate('click');
 

@@ -16,7 +16,8 @@ describe('<AppNavigation />', () => {
             path: "/", 
             component: () => (<h1>test</h1>), 
             icon: DashboardIcon, 
-            title: "Dashboard" 
+            title: "Dashboard title" ,
+            name: "Dashboard"
         }];
 
         mount(
