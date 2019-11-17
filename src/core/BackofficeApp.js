@@ -30,8 +30,8 @@ export default class BackofficeApp {
     return this.#pathTitlesName[path] || this.defaultTitle;
   }
   buildTitlesMap() {
-    this.#resources.map( resource => {
-      this.#pathTitlesName [resource.path] = resource.title;
+    this.#resources.forEach(resource => {
+      this.#pathTitlesName[resource.path] = resource.title;
     });
   }
   initStore() {
