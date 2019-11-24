@@ -10,12 +10,15 @@ import { loginRestore } from "./state/loginActions";
 import SecuredApp from './components/SecuredApp';
 import AppContext from './AppContext';
 
+import ServiceRegistry from './services/ServicesRegistry';
+
 export default class BackofficeApp {
   defaultTitle = 'Backoffice application';
   #reducers = { login: loginReducer };
   #resources = [];
   #pathTitlesName = {};
   #store;
+  #serviceRegistry = new ServiceRegistry();
 
   injectReducers(reducers) {
     this.#reducers = { ...this.#reducers, ...reducers };
@@ -34,12 +37,16 @@ export default class BackofficeApp {
       this.#pathTitlesName[resource.path] = resource.title;
     });
   }
+  getServiceRegistry() {
+    return this.#serviceRegistry;
+  }
   initStore() {
     const reducers = combineReducers(this.#reducers);
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;    
+    const middleware = applyMiddleware(thunk.withExtraArgument(this.getServiceRegistry()));
     this.#store = process.env.NODE_ENV === 'development' 
-      ? createStore(reducers, /* preloadedState, */ composeEnhancers(applyMiddleware(thunk)))
-      : createStore(reducers, applyMiddleware(thunk));    
+      ? createStore(reducers, /* preloadedState, */ composeEnhancers(middleware))
+      : createStore(reducers, middleware);    
     this.#store.dispatch(loginRestore());
   }
   mount(domElementId = 'root') {

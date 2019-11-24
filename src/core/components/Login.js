@@ -83,7 +83,8 @@ export default connect(
     loading: state.login.loading,
     error: state.login.error,
     loggedIn: state.login.loggedIn
-  }), {
-    loginProcess
-  }
+  }),
+  dispatch => ({
+    loginProcess: (loginInfo) => dispatch(loginProcess(loginInfo))
+  })
 )(Login);

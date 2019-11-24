@@ -5,7 +5,7 @@ import MaterialTable from 'material-table';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
-import { loadCategories } from '../state/categoriesActions';
+import { loadCategories, editCategory, addCategory, deleteCategory } from '../state/categoriesActions';
 import { IconButton } from '@material-ui/core';
 
 class Categories extends React.Component {
@@ -24,7 +24,7 @@ class Categories extends React.Component {
         options={
           {
             search: false,
-            toolbar: false,
+            toolbar: true,
             sorting: false,
             paging: false,
             draggable: false,
@@ -35,6 +35,9 @@ class Categories extends React.Component {
           {
             cellStyle: {width: 130},
             render: rowData => {
+              if (!rowData || rowData.tableData.editing) {
+                return (<></>);
+              }
               return (
               <>
                 <IconButton disabled={rowData.position === this.getFirstCategoryPosition()}><ArrowUpwardIcon/></IconButton>
@@ -43,22 +46,16 @@ class Categories extends React.Component {
               );
             }        
           },
+          { title: 'Products', field: 'productsNumber', type: 'numeric', editable: 'never' },
           { title: 'Name', field: 'name' },
           { title: 'Description', field: 'description' },
-          { title: 'Products', field: 'productsNumber', type: 'numeric' },
           { title: 'Active', field: 'active',  type: 'boolean' },
         ]}
         data={this.props.categories}     
         editable={{
-          onRowAdd: newData => {
-            
-          },
-          onRowUpdate: (newData, oldData) =>{
-            return false;
-          },
-          onRowDelete: oldData => {
-          
-          }
+          onRowAdd: newData => this.props.addCategory(newData),
+          onRowUpdate: (newData, oldData) => this.props.editCategory(newData),
+          onRowDelete: oldData => this.props.deleteCategory(oldData.id)
         }}   
       />
     );
@@ -69,5 +66,10 @@ export default connect(
     state => ({
       categories: state.categories.categories,
     }),
-    { loadCategories }
-  )(Categories);
+    dispatch => ({
+        loadCategories: () => dispatch(loadCategories()),
+        editCategory: newData => dispatch(editCategory(newData)),
+        addCategory: newData => dispatch(addCategory(newData)),
+        deleteCategory: categoryId => dispatch(deleteCategory(categoryId))
+    })
+)(Categories);

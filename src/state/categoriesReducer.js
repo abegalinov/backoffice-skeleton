@@ -1,5 +1,10 @@
-import { CATEGORIES_LOADING_STARTED, CATEGORIES_LOADED, CATEGORIES_LOADING_FAILED } 
-    from "./categoriesActionTypes";
+import { 
+  CATEGORIES_LOADED, 
+  CATEGORIES_LOADING_FAILED, 
+  CATEGORIES_LOADING_STARTED,
+  CATEGORY_UPDATED,
+  CATEGORY_DELETED
+} from "./categoriesActionTypes";
 
 const initialState = {loading: false, error: null, categories: []};
 
@@ -23,7 +28,18 @@ const categoriesReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload
       };
-    default: return state;
+    case CATEGORY_UPDATED: 
+     let stateCategories = state.categories.map(category => {
+          if (category.id === action.payload.id) {
+            return action.payload;
+          }
+          return category;
+      });
+      return {
+        ...state,
+        categories: stateCategories
+      };
+     default: return state;
   };
 };
 
