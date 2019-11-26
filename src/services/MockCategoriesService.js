@@ -21,14 +21,10 @@ export default class MockCategoriesService {
         return new Promise(
             (resolve, reject) =>  {
                 setTimeout(() => {
-                    if(Math.random() > 0.5) { 
-                        MockCategoriesService.categories = MockCategoriesService.categories.map(
-                            category => category.id === newData.id ? newData : category 
-                            );
-                        resolve(newData); 
-                    } else {
-                        reject('error');
-                    }
+                    MockCategoriesService.categories = MockCategoriesService.categories.map(
+                        category => category.id === newData.id ? newData : category 
+                        );
+                    resolve(newData); 
                 }, 900);
             }
         );
@@ -37,12 +33,8 @@ export default class MockCategoriesService {
         return new Promise(
             (resolve, reject) =>  {
                 setTimeout(() => {
-                    if(Math.random() > 0.5) { 
-                        MockCategoriesService.categories = MockCategoriesService.categories.filter(category => category.id !== categoryId);
-                        resolve(); 
-                    } else {
-                        reject('error');
-                    }
+                    MockCategoriesService.categories = MockCategoriesService.categories.filter(category => category.id !== categoryId);
+                    resolve(); 
                 }, 900);
             }
         );
@@ -51,19 +43,15 @@ export default class MockCategoriesService {
         return new Promise(
             (resolve, reject) =>  {
                 setTimeout(() => {
-                    if(Math.random() > 0.5) { 
-                        MockCategoriesService.categories.push({
-                            id: MockCategoriesService.currentId++,
-                            name: categoryData.name,
-                            description: categoryData.description,
-                            position: MockCategoriesService.currentId,
-                            productsNumber: 0,
-                            active: categoryData.active
-                        });
-                        resolve(categoryData); 
-                    } else {
-                        reject('error');
-                    }
+                    MockCategoriesService.categories.push({
+                        id: MockCategoriesService.currentId++,
+                        name: categoryData.name,
+                        description: categoryData.description,
+                        position: MockCategoriesService.currentId,
+                        productsNumber: 0,
+                        active: categoryData.active
+                    });
+                    resolve(categoryData); 
                 }, 900);
             }
         );
