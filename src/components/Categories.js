@@ -21,8 +21,11 @@ class Categories extends React.Component {
   render() {
     return (
       <MaterialTable
-        options={
+      title=""
+      options={
           {
+            addRowPosition: 'first',
+            isLoading: true,
             search: false,
             toolbar: true,
             sorting: false,

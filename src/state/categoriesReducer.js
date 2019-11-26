@@ -28,18 +28,17 @@ const categoriesReducer = (state = initialState, action) => {
         loading: false,
         error: action.payload
       };
+    case CATEGORY_DELETED: 
+       return {
+         ...state,
+         categories: state.categories.filter(category => category.id !== action.payload)
+       };
     case CATEGORY_UPDATED: 
-     let stateCategories = state.categories.map(category => {
-          if (category.id === action.payload.id) {
-            return action.payload;
-          }
-          return category;
-      });
       return {
         ...state,
-        categories: stateCategories
+        categories: state.categories.map(category => category.id === action.payload.id ? action.payload : category)
       };
-     default: return state;
+    default: return state;
   };
 };
 
