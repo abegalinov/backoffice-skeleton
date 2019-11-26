@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import thunk from 'redux-thunk';
 import { BrowserRouter } from 'react-router-dom';
@@ -49,18 +48,19 @@ export default class BackofficeApp {
       : createStore(reducers, middleware);    
     this.#store.dispatch(loginRestore());
   }
-  mount(domElementId = 'root') {
+  createComponent() {
     this.initStore();
     this.buildTitlesMap();    
-    ReactDOM.render(
-      <Provider store={this.#store}>
-        <AppContext.Provider value={this}>
-          <BrowserRouter>
-            <SecuredApp />
-          </BrowserRouter>
-        </AppContext.Provider>
-      </Provider>,
-      document.getElementById(domElementId)
-    );
+    return () => {
+      return (
+        <Provider store={this.#store}>
+          <AppContext.Provider value={this}>
+            <BrowserRouter>
+              <SecuredApp />
+            </BrowserRouter>
+          </AppContext.Provider>
+        </Provider>
+      );
+    }
   }
 }

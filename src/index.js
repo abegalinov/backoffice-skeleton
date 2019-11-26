@@ -1,3 +1,5 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 import BackofficeApp from './core/BackofficeApp';
 import { AUTH_SERVICE } from './core/services/ServicesRegistry';
 
@@ -24,4 +26,6 @@ app.injectReducers({categories: categoriesReducer});
 app.addResource({ path: "/", component: Dashboard, icon: DashboardIcon, name: "Dashboard", title: "Dashboard and statistics" });
 app.addResource({ path: "/categories", component: Categories, icon: ListIcon, name: "Categories", title: "Categories management" });
 
-app.mount('root');
+const BackOfficeApplication = app.createComponent();
+
+ReactDOM.render(<BackOfficeApplication />, document.getElementById('root'));
