@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import AuthDto from '../core/dto/AuthDto';
+
 const ENDPOINT = `http://localhost:8080/auth`;
 
 export default class AuthService {
@@ -14,7 +16,7 @@ export default class AuthService {
                     password
                 })
                 .then(response => {
-                    resolve(response.data);
+                    resolve(AuthDto.createFromResponse(response.data));
                 })
                 .catch(error => {
                     reject(error);
