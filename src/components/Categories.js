@@ -15,7 +15,7 @@ import {
   moveCategoryDown
 } from '../state/categoriesActions';
 
-class Categories extends React.Component {
+export class Categories extends React.Component {
   componentDidMount() {
     this.props.loadCategories();
   }

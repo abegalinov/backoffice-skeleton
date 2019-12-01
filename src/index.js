@@ -15,15 +15,15 @@ import categoriesReducer from './state/categoriesReducer';
 
 const app = new BackofficeApp();
 
+app.addResource({ path: "/", component: Dashboard, icon: DashboardIcon, name: "Dashboard", title: "Dashboard and statistics" });
+
 if (process.env.NODE_ENV !== 'development') {
    app.getServiceRegistry().registerService(AUTH_SERVICE, new AuthService());    
+   //app.getServiceRegistry().registerService(CATEGORIES_SERVICE, new CategoriesService());
 } else {
    app.getServiceRegistry().registerService(CATEGORIES_SERVICE, new MockCategoriesService());
 }
-
 app.injectReducers({categories: categoriesReducer});
-
-app.addResource({ path: "/", component: Dashboard, icon: DashboardIcon, name: "Dashboard", title: "Dashboard and statistics" });
 app.addResource({ path: "/categories", component: Categories, icon: ListIcon, name: "Categories", title: "Categories management" });
 
 const BackOfficeApplication = app.createComponent();
