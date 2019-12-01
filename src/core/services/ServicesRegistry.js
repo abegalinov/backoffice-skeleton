@@ -1,5 +1,5 @@
 import MockAuthService from './MockAuthService';
-import LocalStorageService from './LocalStorageService';
+import StorageService from './StorageService';
 
 export const AUTH_SERVICE = 'authService';
 export const LOCAL_STORAGE_SERVICE = 'localStorageService';
@@ -18,7 +18,7 @@ class ServiceRegistry {
     
     registerDefaultServices() {
         this.registerService(AUTH_SERVICE, new MockAuthService());
-        this.registerService(LOCAL_STORAGE_SERVICE, new LocalStorageService());
+        this.registerService(LOCAL_STORAGE_SERVICE, new StorageService());
     }
   
     registerService(key, service) {

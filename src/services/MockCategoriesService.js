@@ -4,7 +4,7 @@ export default class MockCategoriesService {
         if (!MockCategoriesService.categories) {
             MockCategoriesService.categories = [
                 {id: 14, name: "Flowers", description: "roses", productsNumber: 7, position: 1, active: true},
-                {id: 18, name: "Test category 1", description: "ttest", productsNumber: 439, position: 3, active: true}                    
+                {id: 18, name: "Test category 1", description: "ttest", productsNumber: 439, position: 3, active: true},                    
                 {id: 19, name: "Spring 2018", description: "not roses", productsNumber: 22, position: 4, active: false},
             ];
             MockCategoriesService.currentId = 20;
