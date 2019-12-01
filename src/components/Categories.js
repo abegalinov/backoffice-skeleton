@@ -4,9 +4,16 @@ import { connect } from 'react-redux';
 import MaterialTable from 'material-table';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-
-import { loadCategories, editCategory, addCategory, deleteCategory } from '../state/categoriesActions';
 import { IconButton } from '@material-ui/core';
+
+import { 
+  loadCategories, 
+  editCategory, 
+  addCategory, 
+  deleteCategory,
+  moveCategoryUp,
+  moveCategoryDown
+} from '../state/categoriesActions';
 
 class Categories extends React.Component {
   componentDidMount() {
@@ -43,8 +50,8 @@ class Categories extends React.Component {
               }
               return (
               <>
-                <IconButton disabled={rowData.position === this.getFirstCategoryPosition()}><ArrowUpwardIcon/></IconButton>
-                <IconButton disabled={rowData.position === this.getLastCategoryPosition()}><ArrowDownwardIcon/></IconButton>
+                <IconButton onClick={() => { this.props.moveCategoryUp(rowData.id) }} disabled={rowData.position === this.getFirstCategoryPosition()}><ArrowUpwardIcon/></IconButton>
+                <IconButton onClick={() => { this.props.moveCategoryDown(rowData.id) }} disabled={rowData.position === this.getLastCategoryPosition()}><ArrowDownwardIcon/></IconButton>
               </>
               );
             }        
@@ -73,6 +80,8 @@ export default connect(
         loadCategories: () => dispatch(loadCategories()),
         editCategory: newData => dispatch(editCategory(newData)),
         addCategory: newData => dispatch(addCategory(newData)),
-        deleteCategory: categoryId => dispatch(deleteCategory(categoryId))
+        deleteCategory: categoryId => dispatch(deleteCategory(categoryId)),
+        moveCategoryUp: categoryId => dispatch(moveCategoryUp(categoryId)),
+        moveCategoryDown: categoryId => dispatch(moveCategoryDown(categoryId))
     })
 )(Categories);

@@ -1,4 +1,5 @@
 export default class MockCategoriesService {
+    timeout = 900;
     constructor() {
         if (!MockCategoriesService.categories) {
             MockCategoriesService.categories = [
@@ -14,8 +15,25 @@ export default class MockCategoriesService {
             (resolve, reject) => {
                 setTimeout(() => {
                     resolve(MockCategoriesService.categories);
-                }, 900);
+                }, this.timeout);
         });
+    }
+    addCategory(categoryData) {
+        return new Promise(
+            (resolve, reject) =>  {
+                setTimeout(() => {
+                    const newCategoryData = {
+                        id: MockCategoriesService.currentId++,
+                        position: MockCategoriesService.currentId,
+                        productsNumber: 0,
+                        active: categoryData.active,
+                        ...categoryData
+                    };
+                    MockCategoriesService.categories.push(newCategoryData);
+                    resolve(newCategoryData); 
+                }, this.timeout);
+            }
+        );
     }
     updateCategory(newData) {
         return new Promise(
@@ -25,7 +43,7 @@ export default class MockCategoriesService {
                         category => category.id === newData.id ? newData : category 
                         );
                     resolve(newData); 
-                }, 900);
+                }, this.timeout);
             }
         );
     }
@@ -35,25 +53,46 @@ export default class MockCategoriesService {
                 setTimeout(() => {
                     MockCategoriesService.categories = MockCategoriesService.categories.filter(category => category.id !== categoryId);
                     resolve(); 
-                }, 900);
+                }, this.timeout);
             }
         );
     }
-    addCategory(categoryData) {
+    moveCategoryUp(categoryId) {
         return new Promise(
             (resolve, reject) =>  {
                 setTimeout(() => {
-                    MockCategoriesService.categories.push({
-                        id: MockCategoriesService.currentId++,
-                        name: categoryData.name,
-                        description: categoryData.description,
-                        position: MockCategoriesService.currentId,
-                        productsNumber: 0,
-                        active: categoryData.active
-                    });
-                    resolve(categoryData); 
-                }, 900);
+                    const targetCategoryKey = this._findCategoryKeyById(categoryId);
+                    if (targetCategoryKey !== null && MockCategoriesService.categories[targetCategoryKey - 1]) {
+                      const upperCategory = MockCategoriesService.categories[targetCategoryKey - 1];
+                      MockCategoriesService.categories[targetCategoryKey - 1] = MockCategoriesService.categories[targetCategoryKey];
+                      MockCategoriesService.categories[targetCategoryKey] = upperCategory;
+                    }              
+                    resolve(MockCategoriesService.categories); 
+                }, this.timeout);
             }
         );
+    }
+    moveCategoryDown(categoryId) {
+        return new Promise(
+            (resolve, reject) =>  {
+                setTimeout(() => {
+                    const targetCategoryKey = this._findCategoryKeyById(categoryId);
+                    if (targetCategoryKey != null && MockCategoriesService.categories[targetCategoryKey + 1]) {
+                      const categoryBelow = MockCategoriesService.categories[targetCategoryKey + 1];
+                      MockCategoriesService.categories[targetCategoryKey + 1] = MockCategoriesService.categories[targetCategoryKey];
+                      MockCategoriesService.categories[targetCategoryKey] = categoryBelow;
+                    }              
+                    resolve(MockCategoriesService.categories); 
+                }, this.timeout);
+            }
+        );
+    }
+    _findCategoryKeyById(categoryId) {
+        for (const key of MockCategoriesService.categories.keys()) {
+            if (MockCategoriesService.categories[key].id == categoryId) {
+                return key;
+            }
+        }
+        return null;
     }
 }

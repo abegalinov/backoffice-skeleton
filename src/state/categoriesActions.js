@@ -8,7 +8,11 @@ import {
   CATEGORY_ADD_STARTED,
   CATEGORY_ADDED,
   CATEGORY_DELETE_STARTED,
-  CATEGORY_DELETED
+  CATEGORY_DELETED,
+  CATEGORY_MOVING_UP,
+  CATEGORY_MOVING_DOWN,
+  CATEGORY_MOVED_UP,
+  CATEGORY_MOVED_DOWN
 } from "./categoriesActionTypes";
 
 export const loadCategories = () => {
@@ -26,7 +30,7 @@ export const editCategory = (newData) => {
     dispatch(categoryUpdateStarted());
     return serviceRegistry.getService(CATEGORIES_SERVICE).updateCategory(newData)
       .then(
-        (response) => dispatch(categoryUpdated(response))
+        (updatedCategoryData) => dispatch(categoryUpdated(updatedCategoryData))
       );
   };
 };
@@ -36,10 +40,7 @@ export const addCategory = (newData) => {
     dispatch(categoryAddStarted());
     return serviceRegistry.getService(CATEGORIES_SERVICE).addCategory(newData)
       .then(
-        (response) => {
-          dispatch(categoryAdded(response));
-          dispatch(loadCategories());
-        }
+        (newCategory) => dispatch(categoryAdded(newCategory))
       );
   };
 };
@@ -50,6 +51,26 @@ export const deleteCategory = (categoryId) => {
     return serviceRegistry.getService(CATEGORIES_SERVICE).deleteCategory(categoryId)
       .then(
         (response) => dispatch(categoryDeleted(categoryId))
+      );
+  };
+};
+
+export const moveCategoryUp = (categoryId) => {
+  return (dispatch, getState, serviceRegistry) => {
+    dispatch(categoryMovingUpStarted());
+    return serviceRegistry.getService(CATEGORIES_SERVICE).moveCategoryUp(categoryId)
+      .then(
+        (categoriesList) => dispatch(categoryMovedUp(categoriesList))
+      );
+  };
+};
+
+export const moveCategoryDown = (categoryId) => {
+  return (dispatch, getState, serviceRegistry) => {
+    dispatch(categoryMovingDownStarted());
+    return serviceRegistry.getService(CATEGORIES_SERVICE).moveCategoryDown(categoryId)
+      .then(
+        (categoriesList) => dispatch(categoryMovedDown(categoriesList))
       );
   };
 };
@@ -72,18 +93,18 @@ const categoryUpdateStarted = () => ({
   type: CATEGORY_UPDATE_STARTED
 });
 
-const categoryUpdated = (categoryData) => ({
+const categoryUpdated = (updatedCategoryData) => ({
   type: CATEGORY_UPDATED,
-  payload: categoryData
+  payload: updatedCategoryData
 });
 
 const categoryAddStarted = () => ({
   type: CATEGORY_ADD_STARTED
 });
 
-const categoryAdded = (categoryData) => ({
+const categoryAdded = (newCategoryData) => ({
   type: CATEGORY_ADDED,
-  payload: categoryData
+  payload: newCategoryData
 });
 
 const categoryDeleteStarted = () => ({
@@ -93,4 +114,24 @@ const categoryDeleteStarted = () => ({
 const categoryDeleted = (categoryId) => ({
   type: CATEGORY_DELETED,
   payload: categoryId
+});
+
+const categoryMovingUpStarted = (categoryId) => ({
+  type: CATEGORY_MOVING_UP,
+  payload: categoryId
+});
+
+const categoryMovedUp = (newCategoriesList) => ({
+  type: CATEGORY_MOVED_UP,
+  payload: newCategoriesList
+});
+
+const categoryMovingDownStarted = (categoryId) => ({
+  type: CATEGORY_MOVING_DOWN,
+  payload: categoryId
+});
+
+const categoryMovedDown = (newCategoriesList) => ({
+  type: CATEGORY_MOVED_DOWN,
+  payload: newCategoriesList
 });
