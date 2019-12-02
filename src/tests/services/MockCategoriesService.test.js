@@ -1,4 +1,4 @@
-import MockCategoriesService from '../services/MockCategoriesService';
+import MockCategoriesService from '../../services/MockCategoriesService';
 
 describe('MockCategoriesService', () => {
     const service = new MockCategoriesService();

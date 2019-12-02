@@ -1,5 +1,5 @@
-import AuthService from '../services/AuthService';
-import AuthDto from '../core/dto/AuthDto';
+import AuthService from '../../services/AuthService';
+import AuthDto from '../../core/dto/AuthDto';
 
 describe('AuthService', () => {
     it('functionality', () => {
