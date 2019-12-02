@@ -39,9 +39,8 @@ export default class MockCategoriesService {
         return new Promise(
             (resolve, reject) =>  {
                 setTimeout(() => {
-                    MockCategoriesService.categories = MockCategoriesService.categories.map(
-                        category => category.id === newData.id ? newData : category 
-                        );
+                    MockCategoriesService.categories = 
+                        MockCategoriesService.categories.map(category => category.id === newData.id ? newData : category);
                     resolve(newData); 
                 }, this.timeout);
             }
@@ -51,7 +50,8 @@ export default class MockCategoriesService {
         return new Promise(
             (resolve, reject) =>  {
                 setTimeout(() => {
-                    MockCategoriesService.categories = MockCategoriesService.categories.filter(category => category.id !== categoryId);
+                    MockCategoriesService.categories = 
+                        MockCategoriesService.categories.filter(category => category.id !== categoryId);
                     resolve(); 
                 }, this.timeout);
             }
