@@ -6,13 +6,14 @@ export const STORED_LOGIN_DATA_KEY = 'loggedIn';
 export const loginProcess = ({ username, password }) => {
   return (dispatch, getState, serviceRegistry) => {
       dispatch(loginStarted());
-      return serviceRegistry.getService(AUTH_SERVICE).login(username, password).then(authData => {
-        serviceRegistry.getService(LOCAL_STORAGE_SERVICE).storeData(STORED_LOGIN_DATA_KEY, authData);
-        dispatch(loginSuccess(authData));
-      }).catch(error => {
-        dispatch(loginFailed());
-      }
-    );
+      return serviceRegistry.getService(AUTH_SERVICE).login(username, password)
+        .then(authData => {
+          serviceRegistry.getService(LOCAL_STORAGE_SERVICE).storeData(STORED_LOGIN_DATA_KEY, authData);
+          dispatch(loginSuccess(authData));
+        })
+        .catch(error => {
+          dispatch(loginFailed());
+        });
   };
 };
 
