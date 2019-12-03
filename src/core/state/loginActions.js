@@ -39,21 +39,21 @@ export const logoutProcess = () => {
   }
 };
 
-const loginStarted = () => ({
+export const loginStarted = () => ({
   type: LOGIN_STARTED
 });
 
-const loginSuccess = authData => ({
+export const loginSuccess = authData => ({
   type: LOGIN_SUCCESS,
   payload: {
     ...authData
   }
 });
 
-const loginFailed = () => ({
+export const loginFailed = () => ({
   type: LOGIN_FAILED
 });
 
-const logout = () => ({
+export const logout = () => ({
   type: LOGOUT
 });

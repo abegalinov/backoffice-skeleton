@@ -1,6 +1,6 @@
 import { LOGIN_STARTED, LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT } from './loginActionTypes';
 
-const loginReducerInitialState = {loading: false, error: null, loggedIn: null};
+export const loginReducerInitialState = {loading: false, error: null, loggedIn: null};
 
 const loginReducer = (state = loginReducerInitialState, action) => {
   switch (action.type) {
