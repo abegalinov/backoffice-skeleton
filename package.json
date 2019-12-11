@@ -37,7 +37,8 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "react-scripts test",
-    "prepare": "rm -rf dist && mkdir dist && npx babel src -d dist --copy-files"
+    "prepare": "rm -rf dist && mkdir dist && npx babel src -d dist --copy-files",
+    "postinstall": "rm -rf src"
   },
   "eslintConfig": {
     "extends": "react-app"
