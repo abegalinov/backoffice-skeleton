@@ -34,7 +34,7 @@
       "@babel/preset-react"
     ]
   },
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "test": "react-scripts test",
     "prepare": "rm -rf dist && mkdir dist && npx babel src -d dist --copy-files"
