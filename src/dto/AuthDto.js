@@ -1,8 +1,10 @@
 export default class AuthDto {
-    token;
-    userName;
-    tokenValidUntil;
-    userRole;
+    constructor() {
+        this.token = null;
+        this.userName = null;
+        this.tokenValidUntil = 0;
+        this.userRole = 'ROLE_USER';
+    }
     static createFromResponse(response) {
         let dto = new AuthDto();
         dto.token = response.token;
