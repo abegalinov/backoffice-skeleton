@@ -17,59 +17,52 @@ import MockAuthService from './services/MockAuthService';
 import StorageService from './services/StorageService';
 
 export default class BackofficeSkeleton {
-  defaultTitle;
-  #reducers;
-  #resources;
-  #pathTitlesName;
-  #store;
-  #serviceRegistry;
-
   constructor() {
     this.initServices();
     this.defaultTitle = 'Backoffice application';
-    this.#reducers = { login: loginReducer };
-    this.#resources = [];
-    this.#this.pathTitlesName = {};
+    this.reducers = { login: loginReducer };
+    this.resources = [];
+    this.pathTitlesName = {};
   }
 
   injectReducers(reducers) {
-    this.#reducers = { ...this.#reducers, ...reducers };
+    this.reducers = { ...this.reducers, ...reducers };
   }
 
   addResource(resource) {
-    this.#resources.push(resource);
+    this.resources.push(resource);
   }
 
   getResources() {
-    return this.#resources;
+    return this.resources;
   }
 
   getTitleForPath(path) {
-    return this.#pathTitlesName[path] || this.defaultTitle;
+    return this.pathTitlesName[path] || this.defaultTitle;
   }
 
   buildTitlesMap() {
-    this.#resources.forEach(resource => {
-      this.#pathTitlesName[resource.path] = resource.title;
+    this.resources.forEach(resource => {
+      this.pathTitlesName[resource.path] = resource.title;
     });
   }
 
   getServiceRegistry() {
-    return this.#serviceRegistry;
+    return this.serviceRegistry;
   }
 
   initStore() {
-    const reducers = combineReducers(this.#reducers);
+    const reducers = combineReducers(this.reducers);
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;    
     const middleware = applyMiddleware(thunk.withExtraArgument(this.getServiceRegistry()));
-    this.#store = process.env.NODE_ENV === 'development' 
+    this.store = process.env.NODE_ENV === 'development' 
       ? createStore(reducers, /* preloadedState, */ composeEnhancers(middleware))
       : createStore(reducers, middleware);    
-    this.#store.dispatch(loginRestore());
+    this.store.dispatch(loginRestore());
   }
   
   initServices() {
-    this.#serviceRegistry = new ServiceRegistry();
+    this.serviceRegistry = new ServiceRegistry();
     this.getServiceRegistry().registerService(AUTH_SERVICE, new MockAuthService());
     this.getServiceRegistry().registerService(STORAGE_SERVICE, new StorageService());
   }
@@ -79,7 +72,7 @@ export default class BackofficeSkeleton {
     this.buildTitlesMap();    
     return () => {
       return (
-        <Provider store={this.#store}>
+        <Provider store={this.store}>
           <AppContext.Provider value={this}>
             <BrowserRouter>
               <SecuredApp />

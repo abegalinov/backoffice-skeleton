@@ -1,8 +1,6 @@
 class ServiceRegistry {
-
-    #services = {};
-
     constructor() {
+        this.services = {};
         if (ServiceRegistry.instance) {
             return ServiceRegistry.instance
         }
@@ -10,14 +8,14 @@ class ServiceRegistry {
     }
       
     registerService(key, service) {
-        this.#services[key] = service;
+        this.services[key] = service;
     }
 
     getService(key) {
-        if (!this.#services[key]) {
+        if (!this.services[key]) {
             throw new Error('Cannot find service');
         }
-        return this.#services[key];
+        return this.services[key];
     }
 }
 
