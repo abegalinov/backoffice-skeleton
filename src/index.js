@@ -11,7 +11,7 @@ import AppContext from './AppContext';
 
 import ServiceRegistry from './services/ServicesRegistry';
 
-export default class BackofficeApp {
+export default class BackofficeSkeleton {
   defaultTitle = 'Backoffice application';
   #reducers = { login: loginReducer };
   #resources = [];

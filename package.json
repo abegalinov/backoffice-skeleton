@@ -1,7 +1,7 @@
 {
   "name": "@abegalinov/backoffice-skeleton",
   "version": "0.2.0",
-  "description": "Tiny backoffice applications skeleton",
+  "description": "Backoffice applications skeleton",
   "license": "MIT",
   "repository": "abegalinov/backoffice-skeleton",
   "main": "index.js",
