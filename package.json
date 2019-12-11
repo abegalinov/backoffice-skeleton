@@ -3,6 +3,7 @@
   "version": "0.3.0",
   "description": "Backoffice applications skeleton",
   "license": "MIT",
+  "author": "Amir Begalinov",
   "repository": "abegalinov/backoffice-skeleton",
   "main": "index.js",
   "keywords": [
@@ -29,6 +30,7 @@
     "redux-thunk-promise": "^2.0.1",
     "sinon": "^7.5.0"
   },
+  "main": "src/index.js",
   "scripts": {
     "test": "react-scripts test"
   },
