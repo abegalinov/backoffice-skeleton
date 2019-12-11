@@ -83,3 +83,5 @@ export default class BackofficeSkeleton {
     }
   }
 }
+
+export { AUTH_SERVICE, STORAGE_SERVICE };
