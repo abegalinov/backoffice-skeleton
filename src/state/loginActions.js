@@ -3,6 +3,8 @@ import { LOGIN_FAILED, LOGIN_SUCCESS, LOGIN_STARTED, LOGOUT } from "./loginActio
 
 export const STORED_LOGIN_DATA_KEY = 'loggedIn';
 
+// async actions that apply simple actions
+
 export const loginProcess = ({ username, password }) => {
   return (dispatch, getState, serviceRegistry) => {
       dispatch(loginStarted());
@@ -38,6 +40,8 @@ export const logoutProcess = () => {
     serviceRegistry.getService(LOCAL_STORAGE_SERVICE).removeData(STORED_LOGIN_DATA_KEY);
   }
 };
+
+// simple actions that affect state
 
 export const loginStarted = () => ({
   type: LOGIN_STARTED

@@ -1,31 +1,66 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import BackofficeApp from './core/BackofficeApp';
-import { AUTH_SERVICE } from './core/services/ServicesRegistry';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
+import thunk from 'redux-thunk';
+import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-import ListIcon from '@material-ui/icons/List';
-import DashboardIcon from '@material-ui/icons/Dashboard';
+import loginReducer from './state/loginReducer';
+import { loginRestore } from "./state/loginActions";
+import SecuredApp from './components/SecuredApp';
+import AppContext from './AppContext';
 
-import Dashboard from './components/Dashboard';
-import Categories from './components/Categories';
-import AuthService from './services/AuthService';
-import MockCategoriesService from './services/MockCategoriesService';
-import { CATEGORIES_SERVICE } from './services/servicesKeys';
-import categoriesReducer from './state/categoriesReducer';
+import ServiceRegistry from './services/ServicesRegistry';
 
-const app = new BackofficeApp();
+export default class BackofficeApp {
+  defaultTitle = 'Backoffice application';
+  #reducers = { login: loginReducer };
+  #resources = [];
+  #pathTitlesName = {};
+  #store;
+  #serviceRegistry = new ServiceRegistry();
 
-app.addResource({ path: "/", component: Dashboard, icon: DashboardIcon, name: "Dashboard", title: "Dashboard and statistics" });
-
-if (process.env.NODE_ENV !== 'development') {
-   app.getServiceRegistry().registerService(AUTH_SERVICE, new AuthService());    
-   //app.getServiceRegistry().registerService(CATEGORIES_SERVICE, new CategoriesService());
-} else {
-   app.getServiceRegistry().registerService(CATEGORIES_SERVICE, new MockCategoriesService());
+  injectReducers(reducers) {
+    this.#reducers = { ...this.#reducers, ...reducers };
+  }
+  addResource(resource) {
+    this.#resources.push(resource);
+  }
+  getResources() {
+    return this.#resources;
+  }
+  getTitleForPath(path) {
+    return this.#pathTitlesName[path] || this.defaultTitle;
+  }
+  buildTitlesMap() {
+    this.#resources.forEach(resource => {
+      this.#pathTitlesName[resource.path] = resource.title;
+    });
+  }
+  getServiceRegistry() {
+    return this.#serviceRegistry;
+  }
+  initStore() {
+    const reducers = combineReducers(this.#reducers);
+    const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;    
+    const middleware = applyMiddleware(thunk.withExtraArgument(this.getServiceRegistry()));
+    this.#store = process.env.NODE_ENV === 'development' 
+      ? createStore(reducers, /* preloadedState, */ composeEnhancers(middleware))
+      : createStore(reducers, middleware);    
+    this.#store.dispatch(loginRestore());
+  }
+  createComponent() {
+    this.initStore();
+    this.buildTitlesMap();    
+    return () => {
+      return (
+        <Provider store={this.#store}>
+          <AppContext.Provider value={this}>
+            <BrowserRouter>
+              <SecuredApp />
+            </BrowserRouter>
+          </AppContext.Provider>
+        </Provider>
+      );
+    }
+  }
 }
-app.injectReducers({categories: categoriesReducer});
-app.addResource({ path: "/categories", component: Categories, icon: ListIcon, name: "Categories", title: "Categories management" });
-
-const BackOfficeApplication = app.createComponent();
-
-ReactDOM.render(<BackOfficeApplication />, document.getElementById('root'));
