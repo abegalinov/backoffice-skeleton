@@ -1,16 +1,16 @@
-import { AUTH_SERVICE, LOCAL_STORAGE_SERVICE } from "../index";
+import { AUTH_SERVICE, STORAGE_SERVICE } from "../services";
 import { LOGIN_FAILED, LOGIN_SUCCESS, LOGIN_STARTED, LOGOUT } from "./loginActionTypes";
 
 export const STORED_LOGIN_DATA_KEY = 'loggedIn';
 
-// async actions that apply simple actions
+// async actions that create and dispatch simple actions
 
 export const loginProcess = ({ username, password }) => {
   return (dispatch, getState, serviceRegistry) => {
       dispatch(loginStarted());
       return serviceRegistry.getService(AUTH_SERVICE).login(username, password)
         .then(authData => {
-          serviceRegistry.getService(LOCAL_STORAGE_SERVICE).storeData(STORED_LOGIN_DATA_KEY, authData);
+          serviceRegistry.getService(STORAGE_SERVICE).storeData(STORED_LOGIN_DATA_KEY, authData);
           dispatch(loginSuccess(authData));
         })
         .catch(error => {
@@ -21,7 +21,7 @@ export const loginProcess = ({ username, password }) => {
 
 export const loginRestore = () => {
   return (dispatch, getState, serviceRegistry) => {
-    const localStorageService = serviceRegistry.getService(LOCAL_STORAGE_SERVICE);
+    const localStorageService = serviceRegistry.getService(STORAGE_SERVICE);
     const storedLoggedIn = localStorageService.getData(STORED_LOGIN_DATA_KEY);
     if (!storedLoggedIn) {
       return;
@@ -37,7 +37,7 @@ export const loginRestore = () => {
 export const logoutProcess = () => {
   return (dispatch, getState, serviceRegistry) => {
     dispatch(logout());
-    serviceRegistry.getService(LOCAL_STORAGE_SERVICE).removeData(STORED_LOGIN_DATA_KEY);
+    serviceRegistry.getService(STORAGE_SERVICE).removeData(STORED_LOGIN_DATA_KEY);
   }
 };
 

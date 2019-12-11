@@ -5,16 +5,16 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 import AppContext from './AppContext';
+
 import loginReducer from './state/loginReducer';
 import { loginRestore } from "./state/loginActions";
-import ServiceRegistry from './ServicesRegistry';
-import MockAuthService from './services/MockAuthService';
-import StorageService from './services/StorageService';
 
 import SecuredApp from './components/SecuredApp';
 
-export const AUTH_SERVICE = 'authService';
-export const STORAGE_SERVICE = 'localStorageService';
+import ServiceRegistry from './ServicesRegistry';
+import { AUTH_SERVICE, STORAGE_SERVICE } from './services';
+import MockAuthService from './services/MockAuthService';
+import StorageService from './services/StorageService';
 
 export default class BackofficeSkeleton {
   defaultTitle = 'Backoffice application';

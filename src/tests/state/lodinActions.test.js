@@ -9,14 +9,14 @@ import { loginProcess, loginRestore, logoutProcess, STORED_LOGIN_DATA_KEY } from
 import ServiceRegistry from '../../ServicesRegistry';
 import MockAuthService from '../../services/MockAuthService';
 
-import { AUTH_SERVICE, LOCAL_STORAGE_SERVICE } from '../../index';
+import { AUTH_SERVICE, STORAGE_SERVICE } from '../../services';
 
 const mockAuthService = new MockAuthService();
 const mockStorageService = { storeData: sinon.spy() };
 
 const servicesRegistry = new ServiceRegistry();
 servicesRegistry.registerService(AUTH_SERVICE, mockAuthService);
-servicesRegistry.registerService(LOCAL_STORAGE_SERVICE, mockStorageService);
+servicesRegistry.registerService(STORAGE_SERVICE, mockStorageService);
 
 const middleware = [thunk.withExtraArgument(servicesRegistry)];
 const mockStore = configureMockStore(middleware);

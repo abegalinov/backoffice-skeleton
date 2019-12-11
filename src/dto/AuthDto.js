@@ -3,7 +3,6 @@ export default class AuthDto {
     userName;
     tokenValidUntil;
     userRole;
-
     static createFromResponse(response) {
         let dto = new AuthDto();
         dto.token = response.token;

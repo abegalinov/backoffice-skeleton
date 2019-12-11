@@ -7,7 +7,7 @@ import sinon from 'sinon';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import TextField from '@material-ui/core/TextField';
 
-import { Login } from '../components/Login';
+import { Login } from '../../components/Login';
 
 describe('<Login />', () => {
     it('can mount', () => {

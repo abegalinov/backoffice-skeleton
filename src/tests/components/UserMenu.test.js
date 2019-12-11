@@ -7,7 +7,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import IconButton from '@material-ui/core/IconButton';
 
-import { UserMenu } from '../components/UserMenu';
+import { UserMenu } from '../../components/UserMenu';
 
 describe('<UserMenu />', () => {
     it('can mount', () => {

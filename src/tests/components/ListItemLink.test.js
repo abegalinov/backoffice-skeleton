@@ -9,7 +9,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListIcon from '@material-ui/icons/List';
 
-import { ListItemLink } from '../components/ListItemLink';
+import { ListItemLink } from '../../components/ListItemLink';
 
 describe('<ListItemLink />', () => {
     it('renders correctly', () => {

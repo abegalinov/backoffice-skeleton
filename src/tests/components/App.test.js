@@ -5,7 +5,7 @@ import { shallow } from 'enzyme';
 import { Drawer } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 
-import { App } from '../components/App';
+import { App } from '../../components/App';
 
 describe('<App />', () => {
     it('initial state set', () => {
