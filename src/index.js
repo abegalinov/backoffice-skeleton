@@ -17,15 +17,19 @@ import MockAuthService from './services/MockAuthService';
 import StorageService from './services/StorageService';
 
 export default class BackofficeSkeleton {
-  defaultTitle = 'Backoffice application';
-  #reducers = { login: loginReducer };
-  #resources = [];
-  #pathTitlesName = {};
+  defaultTitle;
+  #reducers;
+  #resources;
+  #pathTitlesName;
   #store;
   #serviceRegistry;
 
   constructor() {
     this.initServices();
+    this.defaultTitle = 'Backoffice application';
+    this.#reducers = { login: loginReducer };
+    this.#resources = [];
+    this.#this.pathTitlesName = {};
   }
 
   injectReducers(reducers) {
