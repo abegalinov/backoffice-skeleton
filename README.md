@@ -16,20 +16,18 @@ In order to start building applications you just need to inject your components 
 
 Just simple install the npm package and you are ready to go.
 
-```
+```bash
 npm install @abegalinov/backoffice-skeleton
-
 ```
 
 ## Usage
 
-```
-import BackSkeleton from '@abegalinov/backoffice/skeleton';
-
+```javascript
+import BackSkeleton, { AUTH_SERVICE } from '@abegalinov/backoffice-skeleton';
 
 const app = new BackOfficeSkeleton();
 
-app.addResource({ path: "/", component: YourComponent, icon: MaterialUiIconComponent, name: "Menu name", title: "Component title" });
+app.addResource({ path: "/", component: YourComponent, icon: MaterialUIIconComponent, name: "Menu item", title: "Component title" });
 
 app.getServiceRegistry().registerService(AUTH_SERVICE, new AuthService());
 

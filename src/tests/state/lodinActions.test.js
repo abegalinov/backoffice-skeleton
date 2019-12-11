@@ -6,8 +6,10 @@ import thunk from 'redux-thunk'
 import { LOGIN_STARTED, LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT } from '../../state/loginActionTypes';
 import { loginProcess, loginRestore, logoutProcess, STORED_LOGIN_DATA_KEY } from '../../state/loginActions';
 
-import ServiceRegistry, { AUTH_SERVICE, LOCAL_STORAGE_SERVICE } from '../../services/ServicesRegistry';
+import ServiceRegistry from '../../ServicesRegistry';
 import MockAuthService from '../../services/MockAuthService';
+
+import { AUTH_SERVICE, LOCAL_STORAGE_SERVICE } from '../../index';
 
 const mockAuthService = new MockAuthService();
 const mockStorageService = { storeData: sinon.spy() };

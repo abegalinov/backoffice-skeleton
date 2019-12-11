@@ -1,4 +1,4 @@
-import { AUTH_SERVICE, LOCAL_STORAGE_SERVICE } from "../services/ServicesRegistry";
+import { AUTH_SERVICE, LOCAL_STORAGE_SERVICE } from "../index";
 import { LOGIN_FAILED, LOGIN_SUCCESS, LOGIN_STARTED, LOGOUT } from "./loginActionTypes";
 
 export const STORED_LOGIN_DATA_KEY = 'loggedIn';
