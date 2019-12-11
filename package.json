@@ -1,6 +1,17 @@
 {
   "name": "@abegalinov/backoffice-skeleton",
   "version": "0.1.0",
+  "description": "Tiny backoffice applications skeleton",
+  "license": "MIT",
+  "repository": "abegalinov/backoffice-skeleton",
+  "main": "index.js",
+  "keywords": [
+    "backoffice",
+    "skeleton",
+    "npm",
+    "package",
+    "abegalinov"
+  ],
   "dependencies": {
     "@material-ui/core": "^4.5.2",
     "@material-ui/icons": "^4.5.1",
