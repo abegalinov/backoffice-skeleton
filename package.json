@@ -5,7 +5,6 @@
   "license": "MIT",
   "author": "Amir Begalinov",
   "repository": "abegalinov/backoffice-skeleton",
-  "main": "index.js",
   "keywords": [
     "backoffice",
     "skeleton",
