@@ -1,12 +1,12 @@
 class ServiceRegistry {
     constructor() {
-        this.services = {};
         if (ServiceRegistry.instance) {
             return ServiceRegistry.instance
         }
+        this.services = {};
         ServiceRegistry.instance = this;
     }
-      
+
     registerService(key, service) {
         this.services[key] = service;
     }
