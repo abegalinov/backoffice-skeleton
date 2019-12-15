@@ -23,7 +23,7 @@ npm install @abegalinov/backoffice-skeleton
 ## Usage
 
 ```javascript
-import BackSkeleton from '@abegalinov/backoffice-skeleton';
+import BackOfficeSkeleton from '@abegalinov/backoffice-skeleton';
 import { AUTH_SERVICE } from '@abegalinov/services';
 
 const app = new BackOfficeSkeleton();
