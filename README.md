@@ -49,7 +49,7 @@ Update: a small piece of functionality was added in order to use authorization t
 const app = new BackOfficeSkeleton();
 const getToken = app.getAuthTokenCallback();
 
-// and then in your service, in order to make an authorized request call the callback to get the authorization token;
+// and then in order to make an authorized request call the callback to get the authorization token:
 
 const authToken = getToken();
 ```
