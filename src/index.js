@@ -51,6 +51,10 @@ export default class BackofficeSkeleton {
     return this.serviceRegistry;
   }
 
+  getAuthTokenCallback() {
+    return () => this.store.getState().login.loggedIn.token;
+  }
+
   initStore() {
     const reducers = combineReducers(this.reducers);
     const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;    
