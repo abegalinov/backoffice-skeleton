@@ -3,7 +3,7 @@ Simple backoffice frontend applications framework.
 
 ## Getting Started
 
-The framework is based on react, redux and matirial-ui. Kind of a skeleton that allows you to build admin interfaces and avoid additional boilerplate when starting from scratch.
+The framework is based on react, redux and material-ui. Kind of a skeleton that allows you to build admin interfaces and avoid additional boilerplate when starting from scratch.
 
 It was inspired by react-admin and admin-on-rest frameworks. 
 However, the motivation is to make it more customizable and actually build applications using react and redux, instead of configuring something to achieve desired results.
@@ -42,6 +42,17 @@ The simple setup above makes a component to be shown in the navigation menu and 
 Also in the example above it is shown how a reducer getting injected in the application, you can write a reducer for your application which would affect the store state (actually its part by namespace, since `combineReducers()` is used).
 
 One more small thing to mention: in the dispatched actions (functions, because `thunk` is being used) you can access `ServiceRegistry`, it is passed as the third argument to the function along with `dispatch`, `getState`.
+
+Update: a small piece of functionality was added in order to use authorization token in different services outside the app main instance you can now simply call:
+
+```javascript
+const app = new BackOfficeSkeleton();
+const getToken = app.getAuthTokenCallback();
+
+// and then in your service, in order to make an authorized request call the callback to get the authorization token;
+
+const authToken = getToken();
+```
 
 ## License
 
